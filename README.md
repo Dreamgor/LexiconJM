@@ -1,0 +1,2 @@
+# LexiconJM
+Github för Lexicon
