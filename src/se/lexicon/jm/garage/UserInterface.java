@@ -199,7 +199,7 @@ public class UserInterface {
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 0; i < 12; i++){
-        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() != -2){
+        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
           spot = i;
           i = vehicles.size();
         }
@@ -227,7 +227,7 @@ public class UserInterface {
         int spot = 0;
         ArrayList<Vehicle> vehicles = garage.getVehicles();
         for(int i = 12; i < 30; i++){
-          if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() != -2){
+          if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
             spot = i;
             i = vehicles.size();
           }
@@ -252,7 +252,7 @@ public class UserInterface {
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 30; i < 60; i++){
-        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() != -2){
+        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
           spot = i;
           i = vehicles.size();
         }
@@ -274,7 +274,7 @@ public class UserInterface {
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 60; i < 66; i++){
-        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() != -2){
+        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
           spot = i;
           i = vehicles.size();
         }
@@ -295,7 +295,7 @@ public class UserInterface {
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 66; i < vehicles.size(); i++){
-        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() != -2){
+        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
           spot = i;
           i = vehicles.size();
         }

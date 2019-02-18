@@ -54,7 +54,10 @@ public class Person {
   public String toString() {
     String vehicleList = "";
     for(int i = 0; i < vehicles.size(); i++){
-      vehicleList += vehicles.get(i).toString();
+      if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
+        vehicleList += vehicles.get(i).toString();
+      }
+
     }
     return "Namn: " + namn + ". timLön: " + timLon + ". Anställningsnummer: " + anstalld +
             ". Vehicles: " + vehicleList + ". ";

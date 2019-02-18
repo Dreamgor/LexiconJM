@@ -9,7 +9,7 @@ public class Register {
 
   public Register(){
     //fyll listan för inga indexoutofbounds exception
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
       arbetare.add(i, new Person("", -2));
     }
     //System.out.println(this.toString());
@@ -18,14 +18,17 @@ public class Register {
   public void addPerson(Person p){
     boolean check = false;
     for (int i = 0; i < arbetare.size(); i++) {
-      if(arbetare.get(i).getTimLon() != -2 || arbetare.get(i) == null){
+
+      if(arbetare.get(i).getTimLon() == -2 || arbetare.get(i) == null){
         arbetare.add(i, p);
         check = true;
+        i = arbetare.size();
       }
     }
     if(!check){
       arbetare.add(p);
     }
+
   }
 
   public ArrayList<Person> getArbetare() {
