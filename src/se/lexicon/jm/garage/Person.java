@@ -5,14 +5,11 @@ import java.util.ArrayList;
 public class Person {
   private String namn;
   private double timLon;
-  private static int anstallningsNummer = 1;
-  private int anstalld;
   private ArrayList<Vehicle> vehicles = new ArrayList<>();
 
   public Person(String nyNamn, double nyLön){
     namn = nyNamn;
     timLon = nyLön;
-    anstalld = anstallningsNummer++;
     this.vehicles = this.helpSetupEachPerson();
   }
 
@@ -24,10 +21,6 @@ public class Person {
     return timLon;
   }
 
-  public int getAnstalld() {
-    return anstalld;
-  }
-
   public double getMånadsLon(int timmar){
     return timmar * timLon;
   }
@@ -35,8 +28,8 @@ public class Person {
   public void addVehicle(Vehicle v) {
     boolean check = false;
     for(int i = 0; i < vehicles.size(); i++){
-      if(vehicles.get(i).equals(null)){
-        vehicles.add(i, v);
+      if(vehicles.get(i).getParkSpot() == -2 || vehicles.get(i).equals(null)){
+        vehicles.set(i, v);
         check = true;
         i = vehicles.size();
       }
@@ -59,7 +52,7 @@ public class Person {
       }
 
     }
-    return "Namn: " + namn + ". timLön: " + timLon + ". Anställningsnummer: " + anstalld +
+    return "Namn: " + namn + ". timLön: " + timLon +
             ". Vehicles: " + vehicleList + ". ";
   }
 

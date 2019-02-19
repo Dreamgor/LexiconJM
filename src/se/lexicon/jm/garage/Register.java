@@ -12,7 +12,6 @@ public class Register {
     for (int i = 0; i < 10; i++) {
       arbetare.add(i, new Person("", -2));
     }
-    //System.out.println(this.toString());
   }
 
   public void addPerson(Person p){
@@ -20,7 +19,7 @@ public class Register {
     for (int i = 0; i < arbetare.size(); i++) {
 
       if(arbetare.get(i).getTimLon() == -2 || arbetare.get(i) == null){
-        arbetare.add(i, p);
+        arbetare.set(i, p);
         check = true;
         i = arbetare.size();
       }
@@ -28,21 +27,36 @@ public class Register {
     if(!check){
       arbetare.add(p);
     }
-
   }
 
   public ArrayList<Person> getArbetare() {
     return arbetare;
   }
+
   public void removeArbetare(int plats){
     arbetare.remove(plats);
+  }
+
+  public int getAnstallningsnummer(int plats) {
+    int anstallningsnummer = 0;
+    if(arbetare.get(plats).getTimLon() != -2 && arbetare.get(plats) != null){
+      anstallningsnummer = plats;
+    }
+    else{
+      anstallningsnummer = -1;
+    }
+
+    return anstallningsnummer;
   }
 
   @Override
   public String toString() {
     String tempString = "";
     for (int i = 0; i < arbetare.size(); i++) {
-      tempString += "Person: " + arbetare.get(i).toString() + ". ";
+      if(arbetare.get(i).getTimLon() == -2 || arbetare.get(i) == null){
+        tempString += "Anstälnnings nummer: " + i + "Person: " + arbetare.get(i).toString() + ". ";
+      }
+
     }
     return tempString;
   }

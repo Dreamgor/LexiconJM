@@ -97,21 +97,14 @@ public class Garage implements GarageInterface {
   }
 
   public void taBortAnstalld(String namn, Scanner sc, Register reg){
-    ArrayList<Person> tempReg = reg.getArbetare();
     boolean check = false;
     System.out.println("Ange anställningsnummer: ");
     tempString = sc.nextLine();
     int plats = Integer.valueOf(tempString);
-
-    for (int i = 0; i < tempReg.size(); i++) {
-      if(tempReg.get(i).getTimLon() != -2){
-        if(tempReg.get(i).getAnstalld() == plats){
-          namn = tempReg.get(i).getNamn();
-          reg.removeArbetare(i);
-          check = true;
-        }
-      }
-
+    if(reg.getAnstallningsnummer(plats) == plats){
+      namn = reg.getArbetare().get(plats).getNamn();
+      reg.removeArbetare(plats);
+      check = true;
     }
     if(check){
       System.out.println("Tog bort " + namn + ".");
@@ -121,19 +114,12 @@ public class Garage implements GarageInterface {
     }
   }
   public void sokNamn(Scanner sc, Register reg){
-    ArrayList<Person> tempReg = reg.getArbetare();
     Person p = null;
     System.out.println("Ange anställningsnummer: ");
     tempString = sc.nextLine();
     int plats = Integer.valueOf(tempString);
-
-    for (int i = 0; i < tempReg.size(); i++) {
-      if(tempReg.get(i) == null || tempReg.get(i).getTimLon() != -2){
-        if(tempReg.get(i).getAnstalld() == plats){
-          p = tempReg.get(i);
-        }
-      }
-
+    if(reg.getAnstallningsnummer(plats) == plats){
+      p = reg.getArbetare().get(plats);
     }
     if(p != null){
       System.out.println(p.toString());
@@ -145,7 +131,6 @@ public class Garage implements GarageInterface {
 
   public void begaraManadslon(String namn, Scanner sc, Register reg){
     //sök från anställningsnummer
-    ArrayList<Person> tempReg = reg.getArbetare();
     double manadslon = -1;
     System.out.println("Ange anställningsnummer: ");
     tempString = sc.nextLine();
@@ -155,12 +140,10 @@ public class Garage implements GarageInterface {
     int timmar = Integer.valueOf(tempString);
 
 
-    for (int i = 0; i < tempReg.size(); i++) {
-      if(tempReg.get(i) == null || tempReg.get(i).getTimLon() != -2){
-        if(tempReg.get(i).getAnstalld() == plats){
-          namn = tempReg.get(i).getNamn();
-          manadslon = tempReg.get(i).getMånadsLon(timmar);
-        }
+    for (int i = 0; i < reg.getArbetare().size(); i++) {
+      if(reg.getAnstallningsnummer(i) == plats){
+        namn = reg.getArbetare().get(i).getNamn();
+        manadslon = reg.getArbetare().get(i).getMånadsLon(timmar);
       }
 
     }

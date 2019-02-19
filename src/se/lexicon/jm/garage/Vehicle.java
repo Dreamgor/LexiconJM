@@ -23,6 +23,6 @@ public abstract class Vehicle {
   //toString
   @Override
   public String toString(){
-    return " Vikt: " + weight + ". Parkeringsplats: " + ".";
+    return " Vikt: " + weight + ". Parkeringsplats: " + parkSpot + ".";
   }
 }
