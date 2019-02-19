@@ -94,7 +94,7 @@ public class UserInterface {
           //Leta efter ett fordon
           System.out.println("Vilken plats är ditt fordon?");
           tempString = sc.nextLine();
-          spot = sc.nextInt();
+          spot = Integer.valueOf(tempString);
           success = this.findVehicle(spot);
           if(success >= 0){
             System.out.println("Det finns ett fordon där.");

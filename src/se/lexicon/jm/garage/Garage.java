@@ -55,7 +55,7 @@ public class Garage implements GarageInterface {
   public String toString(){
     String resultat = "";
     for (int i = 0; i < vehicles.size(); i++) {
-      if(vehicles.get(i).getParkSpot() == -2 || vehicles.get(i) == null){
+      if(vehicles.get(i).getParkSpot() != -2 && vehicles.get(i) != null){
         resultat += vehicles.get(i).toString();
       }
 
