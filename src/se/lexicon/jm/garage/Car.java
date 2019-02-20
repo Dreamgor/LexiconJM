@@ -13,6 +13,18 @@ public class Car extends Vehicle {
     return fuelEfficency;
   }
 
+  //Setter
+
+  public void setFuelEfficency(double fuelEfficency) {
+    if(fuelEfficency < 0){
+      throw new IllegalArgumentException("Bränsleeffektivitet kan inte vara under 0.");
+    }
+    else{
+      this.fuelEfficency = fuelEfficency;
+    }
+  }
+
+
   //toString
 
   @Override

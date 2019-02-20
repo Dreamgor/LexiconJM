@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Garage implements GarageInterface {
+public class Garage implements GarageInterface<Vehicle> {
 
   //Lista
   private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>(72);
@@ -69,18 +69,24 @@ public class Garage implements GarageInterface {
   }
 
   //PersonalRegister metoder
+  //Try Catch fixas!
   public  void skapaKund(String namn, double lon, Scanner sc, Register reg){
     System.out.println("Vad heter personen?");
     namn = sc.nextLine();
-    System.out.println("Vad är dess lön?");
-    tempString = sc.nextLine();
-    lon = Double.valueOf(tempString);
-    if(lon >= 0){
-      Person tempPer = new Person(namn, lon);
-      reg.addPerson(tempPer);
+    if(namn.equals("")){
+      throw new IllegalArgumentException("Skriv inte en tom sträng.");
     }
     else{
-      System.out.println("Skriv in ett positivt nummer för lön.");
+      System.out.println("Vad är dess lön?");
+      tempString = sc.nextLine();
+      lon = Double.valueOf(tempString);
+      if(lon >= 0){
+        Person tempPer = new Person(namn, lon);
+        reg.addPerson(tempPer);
+      }
+      else{
+        throw new IllegalArgumentException("Skriv in ett positivt nummer för lön.");
+      }
     }
   }
 
@@ -104,32 +110,44 @@ public class Garage implements GarageInterface {
     System.out.println("Ange anställningsnummer: ");
     tempString = sc.nextLine();
     int plats = Integer.valueOf(tempString);
-    if(reg.getAnstallningsnummer(plats) == plats){
-      namn = reg.getArbetare().get(plats).getNamn();
-      reg.removeArbetare(plats);
-      check = true;
-    }
-    if(check){
-      System.out.println("Tog bort " + namn + ".");
+    if(plats < 0){
+      throw new IllegalArgumentException("plats kan inte vara mindre än 0.");
     }
     else{
-      System.out.println("Den personen finns inte i registret.");
+      if(reg.getAnstallningsnummer(plats) == plats){
+        namn = reg.getArbetare().get(plats).getNamn();
+        reg.removeArbetare(plats);
+        check = true;
+      }
+      if(check){
+        System.out.println("Tog bort " + namn + ".");
+      }
+      else{
+        System.out.println("Den personen finns inte i registret.");
+      }
     }
+
   }
   public void sokNamn(Scanner sc, Register reg){
     Person p = null;
     System.out.println("Ange anställningsnummer: ");
     tempString = sc.nextLine();
     int plats = Integer.valueOf(tempString);
-    if(reg.getAnstallningsnummer(plats) == plats){
-      p = reg.getArbetare().get(plats);
-    }
-    if(p != null){
-      System.out.println(p.toString());
+    if(plats < 0){
+      throw new IllegalArgumentException("plats kan inte vara mindre än 0.");
     }
     else{
-      System.out.println("Den personen finns inte i registret.");
+      if(reg.getAnstallningsnummer(plats) == plats){
+        p = reg.getArbetare().get(plats);
+      }
+      if(p != null){
+        System.out.println(p.toString());
+      }
+      else{
+        System.out.println("Den personen finns inte i registret.");
+      }
     }
+
   }
 
   public void begaraManadslon(String namn, Scanner sc, Register reg){
@@ -138,24 +156,33 @@ public class Garage implements GarageInterface {
     System.out.println("Ange anställningsnummer: ");
     tempString = sc.nextLine();
     int plats = Integer.valueOf(tempString);
-    System.out.println("Ange timmar som personen arbetat: ");
-    tempString = sc.nextLine();
-    int timmar = Integer.valueOf(tempString);
-
-
-    for (int i = 0; i < reg.getArbetare().size(); i++) {
-      if(reg.getAnstallningsnummer(i) == plats){
-        namn = reg.getArbetare().get(i).getNamn();
-        manadslon = reg.getArbetare().get(i).getMånadsLon(timmar);
-      }
-
-    }
-    if(manadslon >= 0){
-      System.out.println(namn + "'s månadslön är: " + manadslon + ".");
+    if(plats < 0){
+      throw new IllegalArgumentException("plats kan inte vara mindre än 0.");
     }
     else{
-      System.out.println("Den personen finns inte i registret.");
+      System.out.println("Ange timmar som personen arbetat: ");
+      tempString = sc.nextLine();
+      int timmar = Integer.valueOf(tempString);
+      if(timmar < 0){
+        throw new IllegalArgumentException("plats kan inte vara mindre än 0.");
+      }
+      else{
+        for (int i = 0; i < reg.getArbetare().size(); i++) {
+          if(reg.getAnstallningsnummer(i) == plats){
+            namn = reg.getArbetare().get(i).getNamn();
+            manadslon = reg.getArbetare().get(i).getMånadsLon(timmar);
+          }
+
+        }
+        if(manadslon >= 0){
+          System.out.println(namn + "'s månadslön är: " + manadslon + ".");
+        }
+        else{
+          System.out.println("Den personen finns inte i registret.");
+        }
+      }
     }
+
   }
   public void repeteraAlternativ(){
     System.out.println("Skriv in 1 för att registrera person, 2 för en utskrift av samtliga arbetare, 3 för att ta bort anställd.");
@@ -168,7 +195,7 @@ public class Garage implements GarageInterface {
   }
 
   public void felmeddelande(){
-    System.out.println("Skriv ett nummer mellan 1-7.");
+   throw new IllegalArgumentException("Skriv ett nummer mellan 1-7.");
   }
 
   public Register getPersList() {

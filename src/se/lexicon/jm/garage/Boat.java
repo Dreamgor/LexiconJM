@@ -13,6 +13,13 @@ public class Boat extends Vehicle {
     return sail;
   }
 
+  //Setter
+
+
+  public void setSail(boolean sail) {
+    this.sail = sail;
+  }
+
   //toString
   @Override
   public String toString() {

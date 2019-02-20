@@ -13,6 +13,17 @@ public class Aeroplane extends Vehicle {
     return maxHeight;
   }
 
+  //Setter
+
+  public void setMaxHeight(int maxHeight) {
+    if(maxHeight < 0){
+      throw new IllegalArgumentException("Maxhöjd kan inte vara under 0.");
+    }
+    else{
+      this.maxHeight = maxHeight;
+    }
+  }
+
   //toString
   @Override
   public String toString() {
