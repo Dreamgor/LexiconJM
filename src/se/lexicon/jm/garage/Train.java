@@ -6,7 +6,7 @@ public class Train extends Vehicle {
   private double brakeLength;
   public Train(int weight, int parkSpot, double brakeLength) {
     super(weight, parkSpot);
-    this.brakeLength = brakeLength;
+    setBrakeLength(brakeLength);
   }
 
   //getter
@@ -18,11 +18,13 @@ public class Train extends Vehicle {
   //Setter
 
   public void setBrakeLength(double brakeLength) {
-    if(brakeLength < 0){
-      throw new IllegalArgumentException("Bromslängd kan inte vara under 0.");
-    }
-    else{
+    try {
+      if (brakeLength < 0 && brakeLength != -2) {
+        throw new IllegalArgumentException();
+      }
       this.brakeLength = brakeLength;
+    } catch (IllegalArgumentException e) {
+      System.out.println("Bromslängd kan inte vara under 0.");
     }
   }
 

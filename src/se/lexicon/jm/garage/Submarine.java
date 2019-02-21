@@ -7,7 +7,7 @@ public class Submarine extends Vehicle {
 
   public Submarine(int weight, int parkSpot, int depth) {
     super(weight, parkSpot);
-    this.depth = depth;
+    setDepth(depth);
   }
 
   //getter
@@ -18,10 +18,15 @@ public class Submarine extends Vehicle {
 
   //setter
   public void setDepth(int depth){
-    if(depth < 0)
-      throw new IllegalArgumentException("The depth of a submarine cannot be below 0");
+    try{
+      if(depth < 0)
+        throw new IllegalArgumentException();
 
-    else this.depth = depth;
+      this.depth = depth;
+    }catch(IllegalArgumentException e){
+      System.out.println("The depth of a submarine cannot be below 0");
+    }
+
 
   }
 

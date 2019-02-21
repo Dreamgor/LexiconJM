@@ -14,13 +14,12 @@ public class UserInterface {
 
   //input output loop här
   public void runMenu(){
-    //Fixa try catch!
     Scanner sc = new Scanner(System.in);
     String val, fordon = "";
     String namn = "";
     Vehicle v = null;
-    int spot, weight, success = 0;
-    double lon = 0;
+    int spot, weight, success = -1;
+    double lon = -1;
     Register reg = garage.getPersList();
 
     boolean keepLooping = true;
@@ -39,113 +38,162 @@ public class UserInterface {
         if(val.equals("1")) {
           //Parkera fordon och kolla kund
           System.out.println("Vad heter kunden?");
-          namn = sc.nextLine();
-          if (namn.equals("")) {
-            throw new IllegalArgumentException("Skriv inte en tom sträng.");
-          } else {
-            boolean kundExisterar = false;
-            ArrayList<Person> tempReg = reg.getArbetare();
-            if (tempReg.size() != 0) {
-              for (int i = 0; i < tempReg.size(); i++) {
-                if (tempReg.get(i).getNamn().equalsIgnoreCase(namn)) {
-                  kundExisterar = true;
-                }
-
-              }
-
-            }
-
-            if (kundExisterar) {
-              System.out.println("Vad för typ av fordon ska parkeras?");
-              fordon = sc.nextLine();
-              System.out.println("Hur mycket väger det?");
-              tempString = sc.nextLine();
+          do{
+            try{
+              namn = sc.nextLine();
               if (namn.equals("")) {
-                throw new IllegalArgumentException("Skriv inte en tom sträng.");
+                throw new IllegalArgumentException();
               }
-              else {
-                weight = Integer.valueOf(tempString);
-                success = this.parkVehicle(namn, fordon, weight, sc);
-                if (success >= 0) {
-                  System.out.println("Fordonet har blivit parkerat. ditt nummer är: " + success + ".");
-                }
-                else {
-                  System.out.println("Inget sådant fordon existerar.");
-                }
+            }catch(IllegalArgumentException e){
+              System.out.println("Skriv inte en tom sträng.");
+            }
+          }while(namn.equals(""));
 
+          boolean kundExisterar = false;
+          ArrayList<Person> tempReg = reg.getArbetare();
+          if (tempReg.size() != 0) {
+            for (int i = 0; i < tempReg.size(); i++) {
+              if (tempReg.get(i).getNamn().equalsIgnoreCase(namn)) {
+                kundExisterar = true;
               }
+            }
+          }
+          if (kundExisterar) {
+            System.out.println("Vad för typ av fordon ska parkeras?");
+            do{
+              try{
+                fordon = sc.nextLine();
+                if (fordon.equals("")) {
+                  throw new IllegalArgumentException();
+                }
+              }catch(IllegalArgumentException e){
+                System.out.println("Skriv inte en tom sträng.");
+              }
+            }while(fordon.equals(""));
+            System.out.println("Hur mycket väger det?");
+            namn = sc.nextLine();
+
+            do{
+              try{
+                if (namn.equals("")) {
+                  throw new IllegalArgumentException();
+                }
+                namn = sc.nextLine();
+              }catch(IllegalArgumentException e){
+                System.out.println("Skriv inte en tom sträng.");
+              }
+            }while(namn.equals(""));
+
+            weight = Integer.valueOf(tempString);
+            success = this.parkVehicle(namn, fordon, weight, sc);
+            if (success >= 0) {
+              System.out.println("Fordonet har blivit parkerat. ditt nummer är: " + success + ".");
             }
             else {
-              System.out.println("Skapar kund. Vad är dess lön?");
-              tempString = sc.nextLine();
-              lon = Double.valueOf(tempString);
-              if (lon >= 0) {
-                garage.skapaKund(namn, lon, reg);
-                System.out.println("Vad för typ av fordon ska parkeras?");
-                fordon = sc.nextLine();
-                if(fordon.equals("")){
-                  throw new IllegalArgumentException("Skriv inte in en tom sträng.");
-                }
-                else{
-                  System.out.println("Hur mycket väger det?");
-                  tempString = sc.nextLine();
-                  weight = Integer.valueOf(tempString);
-                  if(weight < 0){
-                    throw new IllegalArgumentException("Skriv inte ett nummer under 0");
-                  }
-                  else{
-                    success = this.parkVehicle(namn, fordon, weight, sc);
-                    if (success >= 0) {
-                      System.out.println("Fordonet har blivit parkerat. ditt nummer är: " + success + ".");
-                    }
-                    else {
-                      System.out.println("Inget sådant fordon existerar.");
-                    }
-                  }
-
-                }
-
-              } else {
-                throw new IllegalArgumentException("Skriv in ett positivt nummer för lön.");
-              }
+              System.out.println("Inget sådant fordon existerar.");
             }
+          }
+          else {
+            System.out.println("Skapar kund. Vad är dess lön?");
+            lon = -1;
+            do{
+              try{
+                tempString = sc.nextLine();
+                lon = Double.valueOf(tempString);
+                if (lon < 0) {
+                  throw new IllegalArgumentException();
+                }
+              }catch(IllegalArgumentException e){
+                System.out.println("Skriv inte in ett nummer under 0.");
+              }
+            }while(lon < 0);
+
+            garage.skapaKund(namn, lon, reg);
+            System.out.println("Vad för typ av fordon ska parkeras?");
+            fordon = sc.nextLine();
+            do{
+              try {
+                if(fordon.equals("")){
+                  throw new IllegalArgumentException();
+                }
+                fordon = sc.nextLine();
+              }catch(IllegalArgumentException e) {
+                System.out.println("Skriv inte in en tom sträng.");
+              }
+            }while(fordon.equals(""));
+
+
+            System.out.println("Hur mycket väger det?");
+            weight = -1;
+            do{
+              try{
+                tempString = sc.nextLine();
+                weight = Integer.valueOf(tempString);
+                if(weight < 0){
+                  throw new IllegalArgumentException();
+                }
+              }catch(IllegalArgumentException e) {
+                System.out.println("Skriv inte ett nummer under 0");
+              }
+            }while(weight < 0);
+
+            success = this.parkVehicle(namn, fordon, weight, sc);
+            if (success >= 0) {
+              System.out.println("Fordonet har blivit parkerat. ditt nummer är: " + success + ".");
+            }
+            else {
+              System.out.println("Inget sådant fordon existerar.");
+            }
+
           }
         }
         else if(val.equals("2")){
           //Leta efter ett fordon
           System.out.println("Vilken plats är ditt fordon?");
-          tempString = sc.nextLine();
-          spot = Integer.valueOf(tempString);
-          if(spot < 0){
-            throw new IllegalArgumentException("Skriv inte in ett nummer ");
+          spot = -1;
+          do{
+            try{
+              tempString = sc.nextLine();
+              spot = Integer.valueOf(tempString);
+              if(spot < 0){
+                throw new IllegalArgumentException();
+              }
+            }catch(IllegalArgumentException e){
+              System.out.println("Skriv inte in ett nummer under 0.");
+            }
+          }while(spot < 0);
+
+          success = this.findVehicle(spot);
+          if(success >= 0){
+            System.out.println("Det finns ett fordon där.");
           }
           else{
-            success = this.findVehicle(spot);
-            if(success >= 0){
-              System.out.println("Det finns ett fordon där.");
-            }
-            else{
-              System.out.println("Inget fordon existerar på den platsen.");
-            }
+            System.out.println("Inget fordon existerar på den platsen.");
           }
 
         }
         else if(val.equals("3")){
           //Hämta ett fordon
           System.out.println("Vilken plats är ditt fordon?");
-          tempString = sc.nextLine();
-          spot = Integer.valueOf(tempString);
-          if(spot < 0){
-            throw new IllegalArgumentException("Skriv inte in ett nummer mindre än 0.");
+          spot = -1;
+          do{
+            try{
+              tempString = sc.nextLine();
+              spot = Integer.valueOf(tempString);
+              if(spot < 0){
+                throw new IllegalArgumentException();
+              }
+            }catch(IllegalArgumentException e){
+              System.out.println("Skriv inte in ett nummer mindre än 0.");
+            }
+          }while(spot < 0);
+
+          v = this.getTheVehicle(spot);
+          if(v != null){
+            System.out.println(v.toString());
           }
           else{
-            v = this.getTheVehicle(spot);
-            if(v != null){
-              System.out.println(v.toString());
-            }
-            else{
-              System.out.println("Inget fordon existerar på den platsen.");
-            }
+            System.out.println("Inget fordon existerar på den platsen.");
           }
 
         }
@@ -156,19 +204,25 @@ public class UserInterface {
         else if(val.equals("5")){
           //remove fordon
           System.out.println("Vilken plats är ditt fordon?");
-          tempString = sc.nextLine();
-          spot = Integer.valueOf(tempString);
-          if(spot < 0){
-            throw new IllegalArgumentException("Skriv inte in ett nummer mindre än 0.");
+          spot = -1;
+          do{
+            try{
+              tempString = sc.nextLine();
+              spot = Integer.valueOf(tempString);
+              if(spot < 0){
+                throw new IllegalArgumentException();
+              }
+            }catch(IllegalArgumentException e){
+              System.out.println("Skriv inte in ett nummer mindre än 0.");
+            }
+          }while(spot < 0);
+
+          success = this.unparkVehicle(spot);
+          if(success < 0){
+            System.out.println("Inget fordon existerar på den platsen.");
           }
           else{
-            success = this.unparkVehicle(spot);
-            if(success < 0){
-              System.out.println("Inget fordon existerar på den platsen.");
-            }
-            else{
-              System.out.println("Tog bort fordonet på plats: " + spot + ".");
-            }
+            System.out.println("Tog bort fordonet på plats: " + spot + ".");
           }
 
         }
@@ -229,11 +283,19 @@ public class UserInterface {
     //Lägg till flyg
     if(fordon.equalsIgnoreCase("Aeroplane")){
       System.out.println("Vad för maxhöjd klarar flyget?");
-      tempString = sc.nextLine();
-      int maxHeight = Integer.valueOf(tempString);
-      if(maxHeight < 0){
-        throw new IllegalArgumentException("Skriv in ett positivt nummer för höjd.");
-      }
+      int maxHeight = -1;
+      do{
+        try{
+          tempString = sc.nextLine();
+          maxHeight = Integer.valueOf(tempString);
+          if(maxHeight < 0){
+            throw new IllegalArgumentException();
+          }
+        }catch(IllegalArgumentException e){
+          System.out.println("Skriv in ett positivt nummer för höjd.");
+        }
+      }while(maxHeight < 0);
+
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 0; i < 12; i++){
@@ -281,12 +343,19 @@ public class UserInterface {
     if(fordon.equalsIgnoreCase("Car")){
       //Lägg till båt
       System.out.println("Hur mycket bränsle drar bilen?");
-      tempString = sc.nextLine();
-      double fuelEfficency = Double.valueOf(tempString);
-      if(fuelEfficency < 0){
-        throw new IllegalArgumentException("Skriv in ett positivt nummer för bränsle.");
+      double fuelEfficency = -1;
+      do{
+        try{
+          tempString = sc.nextLine();
+          fuelEfficency = Double.valueOf(tempString);
+          if(fuelEfficency < 0){
+            throw new IllegalArgumentException();
+          }
+        }catch(IllegalArgumentException e){
+          System.out.println("Skriv ett positivt nummer för bränsle.");
+        }
+      }while(fuelEfficency < 0);
 
-      }
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 30; i < 60; i++){
@@ -303,11 +372,19 @@ public class UserInterface {
     if(fordon.equalsIgnoreCase("Submarine")){
 
       System.out.println("Hur djupt kan ubåten gå?");
-      tempString = sc.nextLine();
-      int depth = Integer.valueOf(tempString);
-      if(depth < 0){
-        throw new IllegalArgumentException("Skriv in ett positivt nummer för höjd.");
-      }
+      int depth = -1;
+      do{
+        try{
+          tempString = sc.nextLine();
+          depth = Integer.valueOf(tempString);
+          if(depth < 0){
+            throw new IllegalArgumentException();
+          }
+        }catch(IllegalArgumentException e){
+          System.out.println("Skriv in ett positivt nummer för höjd.");
+        }
+      }while(depth < 0);
+
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 60; i < 66; i++){
@@ -323,11 +400,18 @@ public class UserInterface {
     if(fordon.equalsIgnoreCase("Train")){
       //Lägg till tåg
       System.out.println("Hur många meter tar det för tåget att stanna?");
-      tempString = sc.nextLine();
-      double brakeLength = Double.valueOf(tempString);
-      if(brakeLength < 0){
-        throw new IllegalArgumentException("Skriv in ett positivt nummer för bromslängd.");
-      }
+      double brakeLength = -1;
+      do{
+        try{
+          if(brakeLength < 0){
+            throw new IllegalArgumentException();
+          }
+        }catch(IllegalArgumentException e){
+          System.out.println("Skriv in ett positivt nummer för bromslängd.");
+        }
+      }while(brakeLength < 0);
+
+
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
       for(int i = 66; i < vehicles.size(); i++){
