@@ -72,6 +72,7 @@ public class Garage implements GarageInterface {
   public  void skapaKund(String namn, double lon, Scanner sc, Register reg){
     System.out.println("Vad heter personen?");
     namn = sc.nextLine();
+
     System.out.println("Vad är dess lön?");
     tempString = sc.nextLine();
     lon = Double.valueOf(tempString);
