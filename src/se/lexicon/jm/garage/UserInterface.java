@@ -282,19 +282,10 @@ public class UserInterface {
   public int parkVehicle(String namn, String fordon, int weight, Scanner sc){
     //Lägg till flyg
     if(fordon.equalsIgnoreCase("Aeroplane")){
+      Aeroplane aero = null;
       System.out.println("Vad för maxhöjd klarar flyget?");
-      int maxHeight = -1;
-      do{
-        try{
-          tempString = sc.nextLine();
-          maxHeight = Integer.valueOf(tempString);
-          if(maxHeight < 0){
-            throw new IllegalArgumentException();
-          }
-        }catch(IllegalArgumentException e){
-          System.out.println("Skriv in ett positivt nummer för höjd.");
-        }
-      }while(maxHeight < 0);
+      tempString = sc.nextLine();
+      int maxHeight = Integer.valueOf(tempString);
 
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
@@ -304,10 +295,17 @@ public class UserInterface {
           i = vehicles.size();
         }
       }
-      Aeroplane aero = new Aeroplane(weight, spot, maxHeight);
-      int result = garage.park(aero, namn);
-      return result;
+      try{
+        aero = new Aeroplane(weight, spot, maxHeight);
+        int result = garage.park(aero, namn);
+        return result;
+      }catch(IllegalArgumentException e){
+        System.out.println(e);
+        return -1;
+      }
+
     }
+
     //add other vehicles
     if(fordon.equalsIgnoreCase("Boat")){
       //Lägg till båt
@@ -340,21 +338,18 @@ public class UserInterface {
         return -1;
       }
     }
+
     if(fordon.equalsIgnoreCase("Car")){
-      //Lägg till båt
+      //Lägg till bil
+      Car car = null;
       System.out.println("Hur mycket bränsle drar bilen?");
-      double fuelEfficency = -1;
-      do{
-        try{
-          tempString = sc.nextLine();
-          fuelEfficency = Double.valueOf(tempString);
-          if(fuelEfficency < 0){
-            throw new IllegalArgumentException();
-          }
-        }catch(IllegalArgumentException e){
-          System.out.println("Skriv ett positivt nummer för bränsle.");
-        }
-      }while(fuelEfficency < 0);
+
+      tempString = sc.nextLine();
+      double fuelEfficency = Double.valueOf(tempString);
+      if(fuelEfficency < 0){
+        throw new IllegalArgumentException();
+      }
+
 
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
@@ -364,53 +359,52 @@ public class UserInterface {
           i = vehicles.size();
         }
       }
-      Car car = new Car(weight, spot, fuelEfficency);
-      int result = garage.park(car, namn);
-      return result;
+      try{
+        car = new Car(weight, spot, fuelEfficency);
+        int result = garage.park(car, namn);
+        return result;
+      }catch(IllegalArgumentException e){
+        return -1;
+      }
+
     }
+
     //Lägg till ubåt
     if(fordon.equalsIgnoreCase("Submarine")){
-
+      Submarine sub = null;
       System.out.println("Hur djupt kan ubåten gå?");
-      int depth = -1;
-      do{
-        try{
-          tempString = sc.nextLine();
-          depth = Integer.valueOf(tempString);
-          if(depth < 0){
-            throw new IllegalArgumentException();
-          }
-        }catch(IllegalArgumentException e){
-          System.out.println("Skriv in ett positivt nummer för höjd.");
-        }
-      }while(depth < 0);
+
+      tempString = sc.nextLine();
+      int depth = Integer.valueOf(tempString);
 
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
-      for(int i = 60; i < 66; i++){
-        if(vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2){
+      for(int i = 60; i < 66; i++) {
+        if (vehicles.get(i) == null || vehicles.get(i).getParkSpot() == -2) {
           spot = i;
           i = vehicles.size();
         }
+
+
       }
-      Submarine sub = new Submarine(weight, spot, depth);
-      int result = garage.park(sub, namn);
-      return result;
+      try{
+        sub = new Submarine(weight, spot, depth);
+        int result = garage.park(sub, namn);
+        return result;
+      }catch(IllegalArgumentException e){
+        System.out.println(e);
+        return -1;
+      }
+
     }
+
     if(fordon.equalsIgnoreCase("Train")){
       //Lägg till tåg
+      Train train = null;
       System.out.println("Hur många meter tar det för tåget att stanna?");
-      double brakeLength = -1;
-      do{
-        try{
-          if(brakeLength < 0){
-            throw new IllegalArgumentException();
-          }
-        }catch(IllegalArgumentException e){
-          System.out.println("Skriv in ett positivt nummer för bromslängd.");
-        }
-      }while(brakeLength < 0);
 
+      tempString = sc.nextLine();
+      double brakeLength = Double.valueOf(tempString);
 
       int spot = 0;
       ArrayList<Vehicle> vehicles = garage.getVehicles();
@@ -420,10 +414,16 @@ public class UserInterface {
           i = vehicles.size();
         }
       }
-      Train train = new Train(weight, spot, brakeLength);
-      int result = garage.park(train, namn);
-      return result;
+      try{
+        train = new Train(weight, spot, brakeLength);
+        int result = garage.park(train, namn);
+        return result;
+      }catch(IllegalArgumentException e){
+        System.out.println(e);
+        return -1;
+      }
     }
+
     else{
       return -1;
     }
