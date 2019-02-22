@@ -71,14 +71,13 @@ public class UserInterface {
               }
             }while(fordon.equals(""));
             System.out.println("Hur mycket väger det?");
-            namn = sc.nextLine();
-
             do{
               try{
+                namn = sc.nextLine();
                 if (namn.equals("")) {
                   throw new IllegalArgumentException();
                 }
-                namn = sc.nextLine();
+
               }catch(IllegalArgumentException e){
                 System.out.println("Skriv inte en tom sträng.");
               }
@@ -110,13 +109,12 @@ public class UserInterface {
 
             garage.skapaKund(namn, lon, reg);
             System.out.println("Vad för typ av fordon ska parkeras?");
-            fordon = sc.nextLine();
             do{
               try {
+                fordon = sc.nextLine();
                 if(fordon.equals("")){
                   throw new IllegalArgumentException();
                 }
-                fordon = sc.nextLine();
               }catch(IllegalArgumentException e) {
                 System.out.println("Skriv inte in en tom sträng.");
               }
@@ -144,7 +142,8 @@ public class UserInterface {
             else {
               System.out.println("Inget sådant fordon existerar.");
             }
-
+            fordon = "";
+            namn = "";
           }
         }
         else if(val.equals("2")){
