@@ -1,0 +1,21 @@
+SQL ant;
+databas typ av struktur med data. hierarki, filsystem m.m. Tabell: relation. Person: Kolumn: namn, telefonnr. en rad per person. representation
+Uttrycker relation mellan rad1, kol1 och rad1, kol2 osv. datatyper, som i java men annorl. nyckel, index. går inte särskilja två namn med samma namn.
+Personnummer blir nyckel - garanterat unikt. Identiferar unikt: Prim nyckel. Hitta på går också: ID vanligt. Automatiskt adderas. boxbeskr.Primnyck:
+ANVÄNDS BARA för att identifiera. Återanvänds inte,  koppla inte ihop med plats i array. får id vara null? reftyper och värdetyper. Jobba med reftyper.
+
+Kopierar referensen, båda ändras. Värdetyper, en ändras. ID: Notnull, måste ha värde, tillåts inte. annars inget skrivs. databasmotor skillnader.
+ORM för att översätta kod till databas. constraint. Unik vs icke unik. Atomisitet, bara en sak per ruta. Vanlig lösn: två kolumner för extra men det
+går dåligt att expandera och varje måste checka två gånger. flera per ruta missar atom och missar sträng. Egen tabell för telefonnummer. Exempel:
+Personer som går på skola, lärare. Id, namn, email, kurs, lärare, lärareemail. Frågor: SELECT och FROM. Select väljer ut vad man vill ha. From är från
+Vilken tabell. * är allt. "SELECT * FROM Person" ger allt från Person. Select namn, email from person ger tillbaka bara namn och email.
+
+ "" eller [] för exakt. Case sensitive beror på dialekt. WHERE är villkor. kurs = 'C#'. Ett likhetstecken i SQL. Villkoret oberoende resultatkolumnen.
+AND och OR. Inga resultat ger tom sträng. Sortera data: ORDER BY: Instruktioner om hur det ska sortera. Troligen bokstavsordning men order by garanterar.
+DESC för descending. ASC för ascending. (Ofta redundant men för tydlighet.) T.ex. Hur många unika lärare i en databas. hur många elever per lärare.
+Select Lärare From Person Distinct Where namn = 'Cecilia'. Mysql fungerar så, dialekt spec. (Säker med A-z och understreck för namn.) Joina två tabeller ofta inga problem.
+Tre eller fyra kan vara större risk för problem för samma värde och för stor problem. Optimera för prestanda i förväg är dock risk för vet ej i förväg 
+exakt vad som problem, snäva optim är större problem. Varje kolumn ska vara beroende av en (1!) annan kolumn. Plocka ut till egen tabell. Splittra upp.
+
+En tabell Person, en Kurs. Normalisering, undvika konflikter. Ny nyckel efter normal. Problem: samma kurs, olika lärare. Ändra namn på kurs kräver
+ändring på två ställen. Id och kursid. Flerstegssökning. Persontabellen join with kurs ger en temp stor tabell med de resultat som söks. ON kursid = kurs.id.
