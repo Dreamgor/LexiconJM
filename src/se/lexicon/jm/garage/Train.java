@@ -18,14 +18,11 @@ public class Train extends Vehicle {
   //Setter
 
   public void setBrakeLength(double brakeLength) {
-    try {
-      if (brakeLength < 0 && brakeLength != -2) {
-        throw new IllegalArgumentException();
-      }
-      this.brakeLength = brakeLength;
-    } catch (IllegalArgumentException e) {
-      System.out.println("Bromslängd kan inte vara under 0.");
+    if (brakeLength < 0 && brakeLength != -2) {
+      throw new IllegalArgumentException("Den får inte vara mindre än 0.");
     }
+    this.brakeLength = brakeLength;
+
   }
 
 

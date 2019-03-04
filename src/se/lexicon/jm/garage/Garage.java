@@ -71,21 +71,16 @@ public class Garage implements GarageInterface<Vehicle> {
   //PersonalRegister metoder
   public  void skapaKund(String namn, double lon, Scanner sc, Register reg){
     System.out.println("Vad heter personen?");
-<<<<<<< HEAD
+
     namn = sc.nextLine();
-=======
+
     do{
-      try{
         namn = sc.nextLine();
         if(namn.equals("")){
-          throw new IllegalArgumentException();
-        }
-      }catch(IllegalArgumentException e){
+
         System.out.println("Skriv inte en tom sträng.");
       }
     }while(namn.equals(""));
-
->>>>>>> 3793bebdc43c11bc3562ed28084341cd166075d2
 
     System.out.println("Vad är dess lön?");
     lon = -1;

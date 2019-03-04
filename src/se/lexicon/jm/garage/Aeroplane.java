@@ -16,14 +16,10 @@ public class Aeroplane extends Vehicle {
   //Setter
 
   public void setMaxHeight(int maxHeight) {
-    try{
-      if(maxHeight < 0){
-        throw new IllegalArgumentException();
-      }
-      this.maxHeight = maxHeight;
-    }catch(IllegalArgumentException e){
-      System.out.println("Maxhöjd kan inte vara under 0.");
+    if(maxHeight < 0){
+      throw new IllegalArgumentException("Skriv inte ett nummer under 0.");
     }
+    this.maxHeight = maxHeight;
 
   }
 

@@ -16,14 +16,10 @@ public class Car extends Vehicle {
   //Setter
 
   public void setFuelEfficency(double fuelEfficency) {
-    try{
-      if(fuelEfficency < 0 && fuelEfficency != -2){
-        throw new IllegalArgumentException();
-      }
-      this.fuelEfficency = fuelEfficency;
-    }catch(IllegalArgumentException e){
-      System.out.println("Bränsleeffektivitet kan inte vara under 0.");
+    if(fuelEfficency < 0 && fuelEfficency != -2){
+      throw new IllegalArgumentException("Skriv inte ett nummer under 0.");
     }
+    this.fuelEfficency = fuelEfficency;
 
   }
 

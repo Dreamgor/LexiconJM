@@ -22,6 +22,8 @@ public class Submarine extends Vehicle {
     if(depth < 0)
       throw new IllegalArgumentException("The depth of a submarine cannot be below 0");
 
+    this.depth = depth;
+
     else this.depth = depth;    
 
   }
