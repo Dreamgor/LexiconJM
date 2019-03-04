@@ -1,15 +1,15 @@
 package se.lexicon.jm.garage;
 
-public interface GarageInterface {
+public interface GarageInterface<V> {
 
   //Parkera fordon
-  int park(Vehicle vehicle);
+  int park(V vehicle);
 
   //hitta fordon
-  Vehicle find(int parkingLot);
+  V find(int parkingLot);
 
   //ta bort fordon
-  Vehicle unpark(int parkingLot);
+  V unpark(int parkingLot);
 
   //skriv ut fordon
   String toString();

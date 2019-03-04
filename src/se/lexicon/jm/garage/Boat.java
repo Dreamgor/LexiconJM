@@ -5,12 +5,19 @@ public class Boat extends Vehicle {
   private boolean sail;
   public Boat(int weight, int parkSpot, boolean sail) {
     super(weight, parkSpot);
-    this.sail = sail;
+    setSail(sail);
   }
 
   //getter
   public boolean isSail() {
     return sail;
+  }
+
+  //Setter
+
+
+  public void setSail(boolean sail) {
+    this.sail = sail;
   }
 
   //toString

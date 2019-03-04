@@ -5,12 +5,26 @@ public class Aeroplane extends Vehicle {
   private int maxHeight;
   public Aeroplane(int weight, int parkSpot, int maxHeight) {
     super(weight, parkSpot);
-    this.maxHeight = maxHeight;
+    setMaxHeight(maxHeight);
   }
 
   //getter
   public int getMaxHeight() {
     return maxHeight;
+  }
+
+  //Setter
+
+  public void setMaxHeight(int maxHeight) {
+    try{
+      if(maxHeight < 0){
+        throw new IllegalArgumentException();
+      }
+      this.maxHeight = maxHeight;
+    }catch(IllegalArgumentException e){
+      System.out.println("Maxhöjd kan inte vara under 0.");
+    }
+
   }
 
   //toString

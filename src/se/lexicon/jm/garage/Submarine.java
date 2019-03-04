@@ -16,15 +16,17 @@ public class Submarine extends Vehicle {
     return depth;
   }
 
-  //toString
-
+  //setter
   public void setDepth(int depth){
+
     if(depth < 0)
       throw new IllegalArgumentException("The depth of a submarine cannot be below 0");
 
-    else this.depth = depth;
+    else this.depth = depth;    
 
   }
+
+  //toString
 
   @Override
   public String toString() {
